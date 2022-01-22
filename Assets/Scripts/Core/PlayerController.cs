@@ -53,10 +53,10 @@ namespace Core.PlayerControl
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
 
-            foreach (RaycastHit hit in hits)
+            foreach(RaycastHit hit in hits)
             {
                 CombatStats target = hit.collider.GetComponent<CombatStats>();
-                if (target == null) continue;
+                if(target == null) continue;
 
                 //attack
 
@@ -70,7 +70,7 @@ namespace Core.PlayerControl
         {
             RaycastHit hit;
             bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
-            if (hasHit)
+            if(hasHit)
             {
                 navMeshAgent.destination = hit.point;
                 return true;
