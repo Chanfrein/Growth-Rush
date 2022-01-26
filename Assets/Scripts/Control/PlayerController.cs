@@ -1,47 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using Core.Stats;
+using Combat.Stats;
+using Core;
 using System;
+using UnityEngine.AI;
 
-namespace Core.PlayerControl
+namespace Control.PlayerController
 {
     public class PlayerController : MonoBehaviour
-    {   
+    {
         NavMeshAgent navMeshAgent;
-        CombatStats playerStats;
+        Combatant playerCombat;
+        Transform currentTarget;
         Animator animator;
-        
+        Mover mover;
 
         void Start()
         {
-            navMeshAgent = GetComponent<NavMeshAgent>();
-            playerStats = GetComponent<CombatStats>();
+            playerCombat = GetComponent<Combatant>();
             animator = GetComponent<Animator>();
+            mover = GetComponent<Mover>();
         }
 
         void Update()
         {
             if(Input.GetMouseButtonDown(0))
             {
-                if(InterractWithCombat()) return;
+                if(InterractWithNPC()) return;
                 if(InterractWithMovement()) return;
             }
-        }
-
-        void LateUpdate()
-        {
-            UpdateAnimator();
-        }
-
-        private void UpdateAnimator()
-        {
-            Vector3 velocity = navMeshAgent.velocity;
-            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-            float speed = localVelocity.z;
-
-            animator.SetFloat("forwardSpeed", speed);
         }
 
         private Ray GetMouseRay()
@@ -49,20 +37,22 @@ namespace Core.PlayerControl
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
-        private bool InterractWithCombat()
+        private bool InterractWithNPC()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
 
             foreach(RaycastHit hit in hits)
             {
-                CombatStats target = hit.collider.GetComponent<CombatStats>();
+                Combatant target = hit.collider.GetComponent<Combatant>();
                 if(target == null) continue;
 
-                //attack
+                currentTarget = target.transform;
+                playerCombat.combatTarget = target;
+
+                playerCombat.ChaseTarget();
 
                 return true;
             }
-
             return false;
         }
 
@@ -70,13 +60,20 @@ namespace Core.PlayerControl
         {
             RaycastHit hit;
             bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
-            if(hasHit)
+            playerCombat.combatTarget = null;
+            
+            if(hasHit && playerCombat.currentState != CurrentState.Disabled)
             {
-                navMeshAgent.destination = hit.point;
+                currentTarget = null;
+                playerCombat.combatTarget = null;
+                
+                mover.MoveTo(hit.point);
                 return true;
             }
             return false;
         }
+
+
     }
 }
 

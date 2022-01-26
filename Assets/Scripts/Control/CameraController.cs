@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
 
         if(Input.mouseScrollDelta.y != 0)
         {
-            freeLookComponent.m_YAxis.m_MaxSpeed = 100f;
+            freeLookComponent.m_YAxis.m_MaxSpeed = YAxisRotationSpeed;
         } 
     }
 }
