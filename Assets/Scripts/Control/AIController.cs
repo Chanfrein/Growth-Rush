@@ -21,8 +21,8 @@ namespace Control.AIControl
         Combatant combat;
         Mover mover;
         
-        private int currentWaypointIndex = 0;
-        public bool shouldBeAware = true;
+        int currentWaypointIndex = 0;
+        bool shouldBeAware = true;
         bool movingToWaypoint = false;
 
         void Start()
@@ -30,14 +30,11 @@ namespace Control.AIControl
             combat = GetComponent<Combatant>();
             mover = GetComponent<Mover>();
 
-            //BeginAwareness();
+            BeginAwareness();
         }
 
         void Update()
         {
-
-            if (!shouldBeAware) return;
-
             if (combat.currentState == CurrentState.Dead)
             {
                 shouldBeAware = false;
@@ -46,6 +43,7 @@ namespace Control.AIControl
 
             if (combat.combatTarget != null) 
             {
+                AttackBehaviour();
                 return;
             }
 
@@ -87,6 +85,18 @@ namespace Control.AIControl
                 mover.MoveTo(GetCurrentWaypoint());
                 movingToWaypoint = true;
             }
+        }
+
+        private void AttackBehaviour()
+        {
+            if (combat.CanAttackTarget())
+            {
+                mover.Stop();
+                combat.Attack();
+                return;
+            }
+
+            combat.ChaseTarget();
         }
 
         private bool AtWaypoint()

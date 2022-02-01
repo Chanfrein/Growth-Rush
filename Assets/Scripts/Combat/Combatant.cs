@@ -40,17 +40,11 @@ namespace Combat.Stats
         private void Update() 
         {
             timeSinceLastAttack += Time.deltaTime;
+        }
 
-            if(combatTarget == null) return;
-
-            if(TargetIsInRange() && combatTarget.currentState != CurrentState.Dead)
-            {
-                mover.Stop();
-                Attack();
-                return;
-            }
-
-            ChaseTarget();
+        public bool CanAttackTarget()
+        {
+            return TargetIsInRange() && combatTarget.currentState != CurrentState.Dead;
         }
 
         public bool TargetIsInRange()
@@ -60,8 +54,11 @@ namespace Combat.Stats
 
         public void ChaseTarget()
         {
-            mover.AdjustSpeedWithFraction(1f);
-            mover.MoveTo(combatTarget.transform.position);
+            if(combatTarget.currentState != CurrentState.Dead)
+            {
+                mover.AdjustSpeedWithFraction(1f);
+                mover.MoveTo(combatTarget.transform.position);
+            }
         }
 
         public void Attack()
@@ -114,7 +111,7 @@ namespace Combat.Stats
 
         public int OppositeFactionLayerInt()
         {
-            return alignment == Alignment.East ? 6 : 7;
+            return alignment == Alignment.East ? 7 : 6;
         }
     }
 

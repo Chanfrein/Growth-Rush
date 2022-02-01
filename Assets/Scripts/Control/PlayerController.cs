@@ -25,6 +25,19 @@ namespace Control.PlayerController
 
         void Update()
         {
+            if (playerCombat.combatTarget != null)
+            {
+                if(playerCombat.CanAttackTarget())
+                {
+                    mover.Stop();
+                    playerCombat.Attack();
+                }
+                else
+                {
+                    playerCombat.ChaseTarget();
+                }
+            }
+
             if(Input.GetMouseButtonDown(0))
             {
                 if(InterractWithNPC()) return;
