@@ -44,12 +44,10 @@ namespace Control.PlayerController
             foreach(RaycastHit hit in hits)
             {
                 Combatant target = hit.collider.GetComponent<Combatant>();
-                if(target == null) continue;
+                if(target == null || target == playerCombat) continue;
 
                 currentTarget = target.transform;
                 playerCombat.combatTarget = target;
-
-                playerCombat.ChaseTarget();
 
                 return true;
             }
@@ -61,7 +59,7 @@ namespace Control.PlayerController
             RaycastHit hit;
             bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
             playerCombat.combatTarget = null;
-            
+
             if(hasHit && playerCombat.currentState != CurrentState.Disabled)
             {
                 currentTarget = null;

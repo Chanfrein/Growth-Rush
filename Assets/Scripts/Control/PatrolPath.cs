@@ -1,30 +1,33 @@
 using UnityEngine;
 
-public class PatrolPath : MonoBehaviour
+namespace Control.AIControl
 {
-    private void OnDrawGizmos() 
+    public class PatrolPath : MonoBehaviour
     {
-        for (int i = 0; i < transform.childCount; i++)
+        private void OnDrawGizmos()
         {
-            const float waypointGizmosRadius = 0.5f;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                const float waypointGizmosRadius = 0.5f;
 
-            Gizmos.DrawSphere(GetWaypoint(i), waypointGizmosRadius);
+                Gizmos.DrawSphere(GetWaypoint(i), waypointGizmosRadius);
 
-            Vector3 lineStart = GetWaypoint(i);
-            Vector3 lineEnd = GetWaypoint(GetNextIndex(i));
+                Vector3 lineStart = GetWaypoint(i);
+                Vector3 lineEnd = GetWaypoint(GetNextIndex(i));
 
-            Gizmos.DrawLine(lineStart, lineEnd);
+                Gizmos.DrawLine(lineStart, lineEnd);
+            }
+
         }
 
-    }
+        public int GetNextIndex(int i)
+        {
+            return i + 1 >= transform.childCount ? 0 : i + 1;
+        }
 
-    public int GetNextIndex(int i)
-    {
-        return i + 1 >= transform.childCount ? 0 : i + 1;
-    }
-
-    public Vector3 GetWaypoint(int i)
-    {
-        return transform.GetChild(i).position;
+        public Vector3 GetWaypoint(int i)
+        {
+            return transform.GetChild(i).position;
+        }
     }
 }

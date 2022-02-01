@@ -7,19 +7,15 @@ namespace Core
 {
     public class Mover : MonoBehaviour
     {
+        [SerializeField] float maxSpeed = 5.66f;
+
         NavMeshAgent navMeshAgent;
         Animator animator;
-
 
         void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
-        }
-
-        void Update()
-        {
-
         }
 
         private void LateUpdate() 
@@ -45,6 +41,11 @@ namespace Core
         public void Stop()
         {
             navMeshAgent.isStopped = true;
+        }
+
+        public void AdjustSpeedWithFraction(float fraction)
+        {
+            navMeshAgent.speed = maxSpeed * Mathf.Clamp01(fraction);
         }
 
     }
