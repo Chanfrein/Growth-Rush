@@ -287,5 +287,9 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 8261131130943868395, guid: 6216c23354737cc4783fba2c2b6f47f9, type: 3}
+      propertyPath: enemiesLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6216c23354737cc4783fba2c2b6f47f9, type: 3}

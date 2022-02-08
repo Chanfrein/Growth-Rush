@@ -13,9 +13,6 @@ namespace Combat.Stats
         [SerializeField] float maxHealth = 100f;
         [SerializeField] float attackDamage = 25f;
 
-        [Header("Faction")]
-        [SerializeField] Alignment alignment;
-
         [Header("Animation")]
         [SerializeField] int timeStayDeadInSeconds = 5;
 
@@ -49,7 +46,7 @@ namespace Combat.Stats
 
         public bool TargetIsInRange()
         {
-            return Vector3.Distance(combatTarget.transform.position, transform.position) <= AttackRange;
+            return Vector3.Distance(combatTarget.transform.position, transform.position) < AttackRange;
         }
 
         public void ChaseTarget()
@@ -103,15 +100,10 @@ namespace Combat.Stats
             animator.SetTrigger("death");
             currentState = CurrentState.Dead;
             GetComponent<Collider>().enabled = false;
+            GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
 
             await Task.Delay(timeStayDeadInSeconds * 1000);
-            
             Destroy(this.gameObject);
-        }
-
-        public int OppositeFactionLayerInt()
-        {
-            return alignment == Alignment.East ? 7 : 6;
         }
     }
 

@@ -17,9 +17,11 @@ namespace Control.AIControl
 
         [Header("Aggro Settings")]
         [SerializeField] float aggroRange = 5f;
+        [SerializeField] LayerMask enemiesLayer;
 
         Combatant combat;
         Mover mover;
+        Collider myCollider;
         
         int currentWaypointIndex = 0;
         bool shouldBeAware = true;
@@ -29,6 +31,7 @@ namespace Control.AIControl
         {
             combat = GetComponent<Combatant>();
             mover = GetComponent<Mover>();
+            myCollider = GetComponent<SphereCollider>();
 
             BeginAwareness();
         }
@@ -41,7 +44,7 @@ namespace Control.AIControl
                 return;
             }
 
-            if (combat.combatTarget != null) 
+            if (combat.combatTarget != null && combat.combatTarget.currentState != CurrentState.Dead) 
             {
                 AttackBehaviour();
                 return;
@@ -52,12 +55,13 @@ namespace Control.AIControl
 
         private Combatant FindClosestEnemyInRange()
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, aggroRange, combat.OppositeFactionLayerInt());
+            Collider[] colliders = Physics.OverlapSphere(transform.position, aggroRange, enemiesLayer);
             Combatant closestTarget = null;
             float closestDistance = Mathf.Infinity;
 
             foreach (Collider candidate in colliders)
             {
+                Debug.Log($"Evaluating {candidate.gameObject.name}");
                 float distanceFromTarget = Vector3.Distance(transform.position, candidate.transform.position);
                 
                 if (distanceFromTarget < closestDistance)
@@ -97,6 +101,7 @@ namespace Control.AIControl
             }
 
             combat.ChaseTarget();
+            movingToWaypoint = false;
         }
 
         private bool AtWaypoint()
@@ -127,6 +132,11 @@ namespace Control.AIControl
                 await Task.Delay(500);
             }
 
+        }
+
+        public void SetPatrolPath(PatrolPath path)
+        {
+            patrolPath = path;
         }
     }
 }
