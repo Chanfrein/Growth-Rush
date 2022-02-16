@@ -1,21 +1,26 @@
 using UnityEngine;
 using Core;
 using System.Threading.Tasks;
+using System;
+using System.Collections;
 
 namespace Combat.Stats
 {
     public class Combatant : MonoBehaviour
     {
-        /* Stats */
         [Header("Combat Stats")]
-        [SerializeField] float AttackRange = 2f;
-        [SerializeField] float timeBetweenAttacks = 2f;
         [SerializeField] float maxHealth = 100f;
-        [SerializeField] float attackDamage = 25f;
+
+        [Header("Weapon")]
+        [SerializeField] Weapon weapon = null;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+
 
         [Header("Animation")]
         [SerializeField] int timeStayDeadInSeconds = 5;
 
+        [Header("States")]
         public CurrentState currentState = CurrentState.CanAttack;
         public Combatant combatTarget;
 
@@ -32,6 +37,13 @@ namespace Combat.Stats
             animator = GetComponent<Animator>();
 
             currentHealth = maxHealth;
+
+            EquipWeapon(weapon);
+        }
+
+        public void EquipWeapon(Weapon weapon)
+        {
+            weapon.SpawnWeapon(rightHandTransform, leftHandTransform, animator);
         }
 
         private void Update() 
@@ -46,12 +58,12 @@ namespace Combat.Stats
 
         public bool TargetIsInRange()
         {
-            return Vector3.Distance(combatTarget.transform.position, transform.position) < AttackRange;
+            return Vector3.Distance(combatTarget.transform.position, transform.position) < weapon.GetWeaponRange();
         }
 
         public void ChaseTarget()
         {
-            if(combatTarget.currentState != CurrentState.Dead)
+            if (combatTarget.currentState != CurrentState.Dead)
             {
                 mover.AdjustSpeedWithFraction(1f);
                 mover.MoveTo(combatTarget.transform.position);
@@ -61,21 +73,32 @@ namespace Combat.Stats
         public void Attack()
         {
             transform.LookAt(combatTarget.transform);
-            if(timeBetweenAttacks < timeSinceLastAttack)
+            if (weapon.GetWeaponSpeed() < timeSinceLastAttack)
             {
-                //Hit() is called following this trigger
+                //Hit() or Shoot() is called following this trigger
                 animator.SetTrigger("attack");
                 timeSinceLastAttack = 0f;
             }
         }
 
-        //This is an animation event
-        void Hit()
+        //This is an animation event for melee weapons
+        private void Hit()
         {
-            if(combatTarget != null)
+            if (combatTarget == null) return;
+
+            if (weapon.HasProjectile())
             {
-                combatTarget.TakeDamage(attackDamage);
+                weapon.LaunchProjectile(rightHandTransform, leftHandTransform, combatTarget);
+                return;
             }
+
+            combatTarget.TakeDamage(weapon.GetWeaponDamage());
+        }
+
+        //This is an animation event for the bow
+        private void Shoot()
+        {
+            Hit();
         }
 
         public void Stop()
@@ -88,22 +111,22 @@ namespace Combat.Stats
         {
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);
-            if(currentHealth == 0)
+            if (currentHealth == 0)
             {
                 Die();
             }
         }
 
-        private async void Die()
+        private void Die()
         {
             mover.Stop();
+            combatTarget = null;
             animator.SetTrigger("death");
             currentState = CurrentState.Dead;
             GetComponent<Collider>().enabled = false;
             GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
 
-            await Task.Delay(timeStayDeadInSeconds * 1000);
-            Destroy(this.gameObject);
+            Destroy(gameObject, timeStayDeadInSeconds);
         }
     }
 

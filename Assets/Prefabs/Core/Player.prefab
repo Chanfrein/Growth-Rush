@@ -132,8 +132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b23f552e266994c9acd0e59625de25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackRange: 1
-  timeBetweenAttacks: 2
+  maxHealth: 100
+  weapon: {fileID: 11400000, guid: df35f2c7cd41d5c498c8f68fb4ccdecf, type: 2}
+  rightHandTransform: {fileID: 8894287885246323591}
+  leftHandTransform: {fileID: 8894287885246397423}
+  timeStayDeadInSeconds: 5
   currentState: 0
   combatTarget: {fileID: 0}
 --- !u!114 &4958248891795672786
@@ -148,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7bc18610d93db469c2fe94e81122fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 5.66
 --- !u!1001 &8894287885246517763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -212,5 +216,15 @@ PrefabInstance:
 --- !u!4 &8894287885246363417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 435482, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
+  m_PrefabInstance: {fileID: 8894287885246517763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8894287885246397423 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 403948, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
+  m_PrefabInstance: {fileID: 8894287885246517763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8894287885246323591 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 461188, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
   m_PrefabInstance: {fileID: 8894287885246517763}
   m_PrefabAsset: {fileID: 0}

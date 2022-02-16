@@ -5,6 +5,7 @@ using Combat.Stats;
 using Core;
 using System.Threading.Tasks;
 using UnityEngine.AI;
+using System.Threading;
 
 namespace Control.AIControl
 {
@@ -21,26 +22,27 @@ namespace Control.AIControl
 
         Combatant combat;
         Mover mover;
-        Collider myCollider;
         
-        int currentWaypointIndex = 0;
-        bool shouldBeAware = true;
-        bool movingToWaypoint = false;
+        private int currentWaypointIndex = 0;
+        private bool movingToWaypoint = false;
+        private bool hasDied = false;
+
 
         void Start()
         {
             combat = GetComponent<Combatant>();
             mover = GetComponent<Mover>();
-            myCollider = GetComponent<SphereCollider>();
 
-            BeginAwareness();
+            StartCoroutine(BeginAwareness());
         }
 
         void Update()
         {
+            if(hasDied) return;
+
             if (combat.currentState == CurrentState.Dead)
             {
-                shouldBeAware = false;
+                hasDied = true;
                 return;
             }
 
@@ -61,7 +63,6 @@ namespace Control.AIControl
 
             foreach (Collider candidate in colliders)
             {
-                Debug.Log($"Evaluating {candidate.gameObject.name}");
                 float distanceFromTarget = Vector3.Distance(transform.position, candidate.transform.position);
                 
                 if (distanceFromTarget < closestDistance)
@@ -120,16 +121,16 @@ namespace Control.AIControl
             return patrolPath.GetWaypoint(currentWaypointIndex);
         }
 
-        private async void BeginAwareness()
+        private IEnumerator BeginAwareness()
         {
-            while(shouldBeAware)
+            while(!hasDied)
             {
                 Combatant potentialTarget = FindClosestEnemyInRange();
                 if (potentialTarget != null)
                 {
                     combat.combatTarget = potentialTarget;
                 }
-                await Task.Delay(500);
+                yield return new WaitForSeconds(0.5f);
             }
 
         }

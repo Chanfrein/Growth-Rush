@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Control.AIControl;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class TroopSpawner : MonoBehaviour
 {
@@ -13,14 +14,12 @@ public class TroopSpawner : MonoBehaviour
     [SerializeField] GameObject archerEastPrefab;
     [SerializeField] GameObject archerWestPrefab;
 
-
     [Header("West")]
     [SerializeField] Transform spawnPointWest;
     [SerializeField] PatrolPath roadPathWestA;
     [SerializeField] PatrolPath roadPathWestB;
     [SerializeField] float nbOfSwordmenWest;
     [SerializeField] float nbOfArchersWest;
-
 
     [Header("East")]
     [SerializeField] Transform spawnPointEast;
@@ -29,21 +28,23 @@ public class TroopSpawner : MonoBehaviour
     [SerializeField] float nbOfSwordmenEast;
     [SerializeField] float nbOfArchersEast;
 
-    bool shouldSpawn = true;
+    private CancellationTokenSource source;
 
     void Start()
     {
-        BeginSpawning();
+        source = new CancellationTokenSource();
+        BeginSpawning(source.Token);
     }
 
-    void OnApplicationQuit() 
+    void OnApplicationQuit()
     {
-        shouldSpawn = false;
+        source.Cancel();
+        source.Dispose();
     }
 
-    private async void BeginSpawning()
+    private async void BeginSpawning(CancellationToken token)
     {
-        while(shouldSpawn)
+        while(!token.IsCancellationRequested)
         {
             SpawnTroopsWest();
             SpawnTroopsEast();

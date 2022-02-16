@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b23f552e266994c9acd0e59625de25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackRange: 2
-  timeBetweenAttacks: 1
   maxHealth: 100
-  attackDamage: 25
+  weapon: {fileID: 11400000, guid: df35f2c7cd41d5c498c8f68fb4ccdecf, type: 2}
+  rightHandTransform: {fileID: 871151859341083616}
+  leftHandTransform: {fileID: 871151859341157346}
   timeStayDeadInSeconds: 5
   currentState: 0
   combatTarget: {fileID: 0}
@@ -203,5 +203,15 @@ PrefabInstance:
 --- !u!4 &871151859341093782 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+  m_PrefabInstance: {fileID: 871151859341210862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &871151859341157346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 481036, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+  m_PrefabInstance: {fileID: 871151859341210862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &871151859341083616 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 423694, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
   m_PrefabInstance: {fileID: 871151859341210862}
   m_PrefabAsset: {fileID: 0}
