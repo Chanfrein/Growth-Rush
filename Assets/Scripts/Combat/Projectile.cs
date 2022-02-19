@@ -9,7 +9,8 @@ namespace Combat.Stats
         [SerializeField] float speed = 15f;
 
         private float bowDamage = 1f;
-        Combatant target = null;
+        private bool comesFromPlayer = false;
+        private Combatant target = null;
 
         private void Update()
         {
@@ -21,15 +22,16 @@ namespace Combat.Stats
             if (Vector3.Distance(transform.position, GetAimLocation()) < 0.2 ) HitTarget();
         }
 
-        public void SetTarget(Combatant arrowTarget, float damage)
+        public void SetTarget(Combatant arrowTarget, float damage, bool isShotFromPlayer)
         {
             target = arrowTarget;
             bowDamage = damage;
+            comesFromPlayer = isShotFromPlayer;
         }
 
         private void HitTarget()
         {
-            target.TakeDamage(bowDamage);
+            target.TakeDamage(bowDamage, comesFromPlayer);
             Destroy(gameObject);
         }
 

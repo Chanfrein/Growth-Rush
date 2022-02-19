@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6429695782152453653}
   - component: {fileID: 8261131130943868395}
   m_Layer: 0
-  m_Name: Swordman
+  m_Name: BaseTroop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,6 +103,8 @@ MonoBehaviour:
   rightHandTransform: {fileID: 871151859341083616}
   leftHandTransform: {fileID: 871151859341157346}
   timeStayDeadInSeconds: 5
+  damagePopupPrefab: {fileID: 1267705190065251622, guid: 71656aa54d0a74140b58cda298ed5ac6, type: 3}
+  isPlayer: 0
   currentState: 0
   combatTarget: {fileID: 0}
 --- !u!95 &6429695782152453653

@@ -16,11 +16,12 @@ namespace Combat.Stats
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
 
-
-        [Header("Animation")]
+        [Header("Visuals")]
         [SerializeField] int timeStayDeadInSeconds = 5;
+        [SerializeField] Canvas damagePopupPrefab = null;
 
         [Header("States")]
+        [SerializeField] bool isPlayer = false;
         public CurrentState currentState = CurrentState.CanAttack;
         public Combatant combatTarget;
 
@@ -88,11 +89,11 @@ namespace Combat.Stats
 
             if (weapon.HasProjectile())
             {
-                weapon.LaunchProjectile(rightHandTransform, leftHandTransform, combatTarget);
+                weapon.LaunchProjectile(rightHandTransform, leftHandTransform, combatTarget, isPlayer);
                 return;
             }
 
-            combatTarget.TakeDamage(weapon.GetWeaponDamage());
+            combatTarget.TakeDamage(weapon.GetWeaponDamage(), isPlayer);
         }
 
         //This is an animation event for the bow
@@ -107,8 +108,13 @@ namespace Combat.Stats
             combatTarget = null;
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, bool shouldSpawntext)
         {
+            if (shouldSpawntext)
+            {
+                DamageIndicator damagePopup = Instantiate(damagePopupPrefab, GetComponent<CapsuleCollider>().bounds.max, Quaternion.identity).GetComponent<DamageIndicator>();
+                damagePopup.SetDamage(weapon.GetWeaponDamage());
+            }
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);
             if (currentHealth == 0)

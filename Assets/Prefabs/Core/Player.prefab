@@ -137,6 +137,8 @@ MonoBehaviour:
   rightHandTransform: {fileID: 8894287885246323591}
   leftHandTransform: {fileID: 8894287885246397423}
   timeStayDeadInSeconds: 5
+  damagePopupPrefab: {fileID: 0}
+  isPlayer: 1
   currentState: 0
   combatTarget: {fileID: 0}
 --- !u!114 &4958248891795672786
