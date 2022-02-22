@@ -40,13 +40,13 @@ namespace Control.AIControl
         {
             if(hasDied) return;
 
-            if (combat.currentState == CurrentState.Dead)
+            if(combat.currentState == CurrentState.Dead)
             {
                 hasDied = true;
                 return;
             }
 
-            if (combat.combatTarget != null && combat.combatTarget.currentState != CurrentState.Dead) 
+            if(combat.combatTarget != null && combat.combatTarget.currentState != CurrentState.Dead) 
             {
                 AttackBehaviour();
                 return;
@@ -61,11 +61,11 @@ namespace Control.AIControl
             Combatant closestTarget = null;
             float closestDistance = Mathf.Infinity;
 
-            foreach (Collider candidate in colliders)
+            foreach(Collider candidate in colliders)
             {
                 float distanceFromTarget = Vector3.Distance(transform.position, candidate.transform.position);
                 
-                if (distanceFromTarget < closestDistance)
+                if(distanceFromTarget < closestDistance)
                 {
                     closestDistance = distanceFromTarget;
                     closestTarget = candidate.GetComponent<Combatant>();
@@ -77,14 +77,14 @@ namespace Control.AIControl
 
         private void PatrolBehaviour()
         {
-            if (AtWaypoint())
+            if(AtWaypoint())
             {
                 CycleWaypoint();
                 mover.AdjustSpeedWithFraction(walkSpeedFraction);
                 mover.MoveTo(GetCurrentWaypoint());
                 movingToWaypoint = true;
             }
-            else if (!movingToWaypoint && !AtWaypoint())
+            else if(!movingToWaypoint && !AtWaypoint())
             {
                 mover.AdjustSpeedWithFraction(walkSpeedFraction);
                 mover.MoveTo(GetCurrentWaypoint());
@@ -94,7 +94,7 @@ namespace Control.AIControl
 
         private void AttackBehaviour()
         {
-            if (combat.CanAttackTarget())
+            if(combat.CanAttackTarget())
             {
                 mover.Stop();
                 combat.Attack();
@@ -126,7 +126,7 @@ namespace Control.AIControl
             while(!hasDied)
             {
                 Combatant potentialTarget = FindClosestEnemyInRange();
-                if (potentialTarget != null)
+                if(potentialTarget != null)
                 {
                     combat.combatTarget = potentialTarget;
                 }

@@ -64,7 +64,7 @@ namespace Combat.Stats
 
         public void ChaseTarget()
         {
-            if (combatTarget.currentState != CurrentState.Dead)
+            if(combatTarget.currentState != CurrentState.Dead)
             {
                 mover.AdjustSpeedWithFraction(1f);
                 mover.MoveTo(combatTarget.transform.position);
@@ -74,7 +74,7 @@ namespace Combat.Stats
         public void Attack()
         {
             transform.LookAt(combatTarget.transform);
-            if (weapon.GetWeaponSpeed() < timeSinceLastAttack)
+            if(weapon.GetWeaponSpeed() < timeSinceLastAttack)
             {
                 //Hit() or Shoot() is called following this trigger
                 animator.SetTrigger("attack");
@@ -85,9 +85,9 @@ namespace Combat.Stats
         //This is an animation event for melee weapons
         private void Hit()
         {
-            if (combatTarget == null) return;
+            if(combatTarget == null) return;
 
-            if (weapon.HasProjectile())
+            if(weapon.HasProjectile())
             {
                 weapon.LaunchProjectile(rightHandTransform, leftHandTransform, combatTarget, isPlayer);
                 return;
@@ -110,14 +110,14 @@ namespace Combat.Stats
 
         public void TakeDamage(float damage, bool shouldSpawntext)
         {
-            if (shouldSpawntext)
+            if(shouldSpawntext)
             {
                 DamageIndicator damagePopup = Instantiate(damagePopupPrefab, GetComponent<CapsuleCollider>().bounds.max, Quaternion.identity).GetComponent<DamageIndicator>();
                 damagePopup.SetDamage(weapon.GetWeaponDamage());
             }
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);
-            if (currentHealth == 0)
+            if(currentHealth == 0)
             {
                 Die();
             }

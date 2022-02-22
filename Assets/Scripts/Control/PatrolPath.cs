@@ -6,7 +6,7 @@ namespace Control.AIControl
     {
         private void OnDrawGizmos()
         {
-            for (int i = 0; i < transform.childCount; i++)
+            for(int i = 0; i < transform.childCount; i++)
             {
                 const float waypointGizmosRadius = 0.5f;
 

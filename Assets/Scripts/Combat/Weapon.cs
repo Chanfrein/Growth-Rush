@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Combat.Stats
@@ -16,19 +17,34 @@ namespace Combat.Stats
         [SerializeField] float timeBetweenAttacks = 1.5f;
         [SerializeField] bool isRightHanded = true;
 
-
+        const string weaponName = "Weapon";
+        
         public void SpawnWeapon(Transform rightHand, Transform leftHand, Animator animator)
         {
+            DestroyOldWeapon(rightHand, leftHand);
+
             Transform handTransform = GetHandTransform(rightHand, leftHand);
 
-            Instantiate(weaponPrefab, handTransform);
+            GameObject weapon = Instantiate(weaponPrefab, handTransform);
+            weapon.name = weaponName;
             animator.runtimeAnimatorController = animatorOverride;
+        }
+
+        private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
+        {
+            Transform oldWeapon = rightHand.Find("weaponName");
+
+            if(oldWeapon == null) oldWeapon = leftHand.Find(weaponName);
+            if(oldWeapon == null) return;
+
+            oldWeapon.name = "Destroyed";
+            Destroy(oldWeapon.gameObject);
         }
 
         private Transform GetHandTransform(Transform rightHand, Transform leftHand)
         {
             Transform handTransform;
-            if (isRightHanded) handTransform = rightHand;
+            if(isRightHanded) handTransform = rightHand;
             else handTransform = leftHand;
             return handTransform;
         }

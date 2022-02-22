@@ -5,6 +5,7 @@ using Combat.Stats;
 using Core;
 using System;
 using UnityEngine.AI;
+using Upgrades;
 
 namespace Control.PlayerController
 {
@@ -25,7 +26,7 @@ namespace Control.PlayerController
 
         void Update()
         {
-            if (playerCombat.combatTarget != null)
+            if(playerCombat.combatTarget != null)
             {
                 if(playerCombat.CanAttackTarget())
                 {
@@ -40,6 +41,7 @@ namespace Control.PlayerController
 
             if(Input.GetMouseButtonDown(0))
             {
+                if(IntereactWithUI()) return;
                 if(InterractWithNPC()) return;
                 if(InterractWithMovement()) return;
             }
@@ -50,6 +52,19 @@ namespace Control.PlayerController
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
+        private bool IntereactWithUI()
+        {
+            RaycastHit hit;
+            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
+
+            if(hasHit && hit.collider.gameObject.layer == 5)
+            {
+                Debug.Log("Hit UI!!");
+                return true;
+            }
+            return false;
+        }
+
         private bool InterractWithNPC()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
@@ -57,12 +72,27 @@ namespace Control.PlayerController
             foreach(RaycastHit hit in hits)
             {
                 Combatant target = hit.collider.GetComponent<Combatant>();
-                if(target == null || target == playerCombat) continue;
+                if(target != null && target != playerCombat)
+                {
+                    currentTarget = target.transform;
+                    playerCombat.combatTarget = target;
 
-                currentTarget = target.transform;
-                playerCombat.combatTarget = target;
-
-                return true;
+                    return true;
+                }
+                
+                Merchant merchant = hit.collider.GetComponent<Merchant>();
+                if(merchant != null)
+                {
+                    float distanceFromMerchant = Vector3.Distance(transform.position, merchant.transform.position);
+                    if(distanceFromMerchant <= merchant.interactionRange)
+                    {
+                        mover.Stop();
+                        merchant.Interract();
+                        return true;
+                    }
+                    StartCoroutine(InterractWithMovement(merchant));
+                    return true;
+                }
             }
             return false;
         }
@@ -73,7 +103,8 @@ namespace Control.PlayerController
             bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
             playerCombat.combatTarget = null;
 
-            if(hasHit && playerCombat.currentState != CurrentState.Disabled)
+
+            if (hasHit && playerCombat.currentState != CurrentState.Disabled)
             {
                 currentTarget = null;
                 playerCombat.combatTarget = null;
@@ -82,6 +113,19 @@ namespace Control.PlayerController
                 return true;
             }
             return false;
+        }
+
+        private IEnumerator InterractWithMovement(Merchant target)
+        {
+            Vector3 destination = target.GetComponent<CapsuleCollider>().ClosestPoint(transform.position);
+            mover.MoveTo(destination);
+
+            while(Vector3.Distance(transform.position, destination) >= 1f)
+            {
+                yield return null;
+            }
+
+            target.Interract();
         }
 
 
