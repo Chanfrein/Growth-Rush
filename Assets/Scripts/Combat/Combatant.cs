@@ -29,7 +29,7 @@ namespace Combat.Stats
         Mover mover;
 
         float timeSinceLastAttack = Mathf.Infinity;
-        float currentHealth;
+        public float currentHealth;
 
 
         private void Start() 
@@ -42,9 +42,11 @@ namespace Combat.Stats
             EquipWeapon(weapon);
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(Weapon newWeapon)
         {
-            weapon.SpawnWeapon(rightHandTransform, leftHandTransform, animator);
+            newWeapon.SpawnWeapon(rightHandTransform, leftHandTransform, animator);
+            weapon = newWeapon;
+
         }
 
         private void Update() 
@@ -113,7 +115,7 @@ namespace Combat.Stats
             if(shouldSpawntext)
             {
                 DamageIndicator damagePopup = Instantiate(damagePopupPrefab, GetComponent<CapsuleCollider>().bounds.max, Quaternion.identity).GetComponent<DamageIndicator>();
-                damagePopup.SetDamage(weapon.GetWeaponDamage());
+                damagePopup.SetDamage(damage);
             }
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);

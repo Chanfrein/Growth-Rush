@@ -23,16 +23,18 @@ namespace Combat.Stats
         {
             DestroyOldWeapon(rightHand, leftHand);
 
-            Transform handTransform = GetHandTransform(rightHand, leftHand);
-
-            GameObject weapon = Instantiate(weaponPrefab, handTransform);
-            weapon.name = weaponName;
+            if(weaponPrefab != null)
+            {
+                Transform handTransform = GetHandTransform(rightHand, leftHand);
+                GameObject weapon = Instantiate(weaponPrefab, handTransform);
+                weapon.name = weaponName;
+            }
             animator.runtimeAnimatorController = animatorOverride;
         }
 
         private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
         {
-            Transform oldWeapon = rightHand.Find("weaponName");
+            Transform oldWeapon = rightHand.Find(weaponName);
 
             if(oldWeapon == null) oldWeapon = leftHand.Find(weaponName);
             if(oldWeapon == null) return;

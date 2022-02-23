@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51bd06f1b9291974b9b5229e05877118, type: 3}
+  m_Name: HolyBlast
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 6793448193912683456, guid: 09a3b48cc8ab8114b8c21e4b2e283ed7, type: 3}
+  projectile: {fileID: 7248563661194333943, guid: 09a3b48cc8ab8114b8c21e4b2e283ed7, type: 3}
+  animatorOverride: {fileID: 22100000, guid: 669792a5b3750f845b408e015ea7ab8d, type: 2}
+  weaponDamage: 20
+  attackRange: 10
+  timeBetweenAttacks: 1.5
+  isRightHanded: 1

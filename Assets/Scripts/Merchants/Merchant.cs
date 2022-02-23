@@ -46,9 +46,14 @@ namespace Upgrades
 
             int i = 0;
 
-            foreach (Transform child in background.transform)
+            foreach(Transform child in background.transform)
             {
                 if(i >= merchantUpgrades.Length) break;
+
+                foreach (Transform variable in child.transform)
+                {
+                    Destroy(variable.gameObject);
+                }
 
                 Instantiate(merchantUpgrades[i], child);
                 i++;

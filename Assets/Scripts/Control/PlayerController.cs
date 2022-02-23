@@ -6,6 +6,7 @@ using Core;
 using System;
 using UnityEngine.AI;
 using Upgrades;
+using UnityEngine.EventSystems;
 
 namespace Control.PlayerController
 {
@@ -41,9 +42,9 @@ namespace Control.PlayerController
 
             if(Input.GetMouseButtonDown(0))
             {
-                if(IntereactWithUI()) return;
-                if(InterractWithNPC()) return;
-                if(InterractWithMovement()) return;
+                if(InteractWithUI()) return;
+                if(InteractWithNPC()) return;
+                if(InteractWithMovement()) return;
             }
         }
 
@@ -52,20 +53,16 @@ namespace Control.PlayerController
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
-        private bool IntereactWithUI()
+        private bool InteractWithUI()
         {
-            RaycastHit hit;
-            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
-
-            if(hasHit && hit.collider.gameObject.layer == 5)
+            if (EventSystem.current.IsPointerOverGameObject())
             {
-                Debug.Log("Hit UI!!");
                 return true;
             }
             return false;
         }
 
-        private bool InterractWithNPC()
+        private bool InteractWithNPC()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
 
@@ -97,7 +94,7 @@ namespace Control.PlayerController
             return false;
         }
 
-        private bool InterractWithMovement()
+        private bool InteractWithMovement()
         {
             RaycastHit hit;
             bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
@@ -120,7 +117,7 @@ namespace Control.PlayerController
             Vector3 destination = target.GetComponent<CapsuleCollider>().ClosestPoint(transform.position);
             mover.MoveTo(destination);
 
-            while(Vector3.Distance(transform.position, destination) >= 1f)
+            while(Vector3.Distance(transform.position, destination) >= 1.5f)
             {
                 yield return null;
             }

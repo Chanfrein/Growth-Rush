@@ -8,7 +8,7 @@ namespace Combat.Stats
     {
         [SerializeField] float speed = 15f;
 
-        private float bowDamage = 1f;
+        private float weaponDamage = 1f;
         private bool comesFromPlayer = false;
         private Combatant target = null;
 
@@ -25,13 +25,13 @@ namespace Combat.Stats
         public void SetTarget(Combatant arrowTarget, float damage, bool isShotFromPlayer)
         {
             target = arrowTarget;
-            bowDamage = damage;
+            weaponDamage = damage;
             comesFromPlayer = isShotFromPlayer;
         }
 
         private void HitTarget()
         {
-            target.TakeDamage(bowDamage, comesFromPlayer);
+            target.TakeDamage(weaponDamage, comesFromPlayer);
             Destroy(gameObject);
         }
 

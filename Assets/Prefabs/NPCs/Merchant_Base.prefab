@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8473928824736638870}
   - component: {fileID: 8473928824736638871}
   m_Layer: 0
-  m_Name: Merchant
+  m_Name: Merchant_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,5 +113,4 @@ MonoBehaviour:
   interactionRange: 2
   leaveInteractionRange: 5
   shopWindowPrefab: {fileID: 8000212332695383498, guid: 8dc92c48bc781f342a52c86edc675eed, type: 3}
-  merchantUpgrades:
-  - {fileID: 4987385766720744714, guid: a30b0f7be11712448a4d794863409bb4, type: 3}
+  merchantUpgrades: []
