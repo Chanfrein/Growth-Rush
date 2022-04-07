@@ -25,5 +25,15 @@ More in Scripts/Control/PatrolPath.cs
 <img src="./GameplayGifs/TroopsCombat.gif"><br>
 Fast forward a minute later and the opposing troops meet in the middle of the map, on one of the two roads.<br>
 If you look carefully, you can see that I have no talent for art.<br>
-  
+ <br>
+ <br>
+ <br>
+ <strong>The weapons.</strong>
+ <img src="./GameplayGifs/PlayerSword.gif"><br>
+ <img src="./GameplayGifs/PlayerBow.gif"><br>
+ <img src="./GameplayGifs/PlayerMagic.gif"><br>
+ <br>
+ Currently there are three weapons: a sword, a bow and a holy blast. Weapons are a scriptable object, with ranged weapons having an additional Projectile monobehaviour attached to them.<br>
+ The weapons, combat mechanics and animation are shared between the player and troops. The Combatant class is flexible and can be used by both the PlayerController and AiController.<br>
+ Each weapon prefab also has an animation override controller to replace the current attack animation by its own.<br>
 </p>
