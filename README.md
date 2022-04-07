@@ -41,10 +41,11 @@ If you look carefully, you can see that I have no talent for art.<br>
  <br>
  <br>
  <strong>The merchants</strong><br>
- <img src="./GameplayGifs/BuySword.gif">
- <img src="./GameplayGifs/BuyArcherUpgrade.gif">
+ <img src="./GameplayGifs/BuySword.gif"><br>
+ <img src="./GameplayGifs/BuyArcherUpgrade.gif"><br>
  The merchants are NPCs meant to purchase upgrades and weapons. Currently the upgrades only include adding swordsmen and archers to the troop spawner.<br>
  This was my first time implementing a UI more complex than simply text popups. The merchant script has an array of Upgrade_Base, which is the parent of all upgrades. When interacted with, a merchant will clear the trade window and fill it with his upgrades, then enable it.<br>
+I also have a text zone in the trade window to display the effect of each purchase.<br>
  Upon walking away or clicking the red square, the trade window is simply disabled.<br>
  The folder structure for these scripts is still a WIP as I have many more features to implement. Find the scripts in Scripts/Merchants/Merchants.cs and Scripts/Upgrades.
 </p>
