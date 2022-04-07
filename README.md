@@ -4,7 +4,7 @@ The knoweldge comes mostly from my own research and also two online lessons that
 
 
 <strong>The intended design:</strong>
-The final goal would be a single-player moba, where the player starts in a base on a mirrored map and the other base is controlled by AI.
+The final goal would be a single-player moba, where the player starts in a base on a symetric map and the other base is controlled by AI.
 The player must help his troops push against the AI's troop, either through direct combat or by purchasing upgrades.
 <br>
 <br>
