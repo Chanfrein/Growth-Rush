@@ -28,7 +28,7 @@ If you look carefully, you can see that I have no talent for art.<br>
  <br>
  <br>
  <br>
- <strong>The weapons.</strong>
+ <strong>The weapons.</strong><br>
  <img src="./GameplayGifs/PlayerSword.gif"><br>
  <img src="./GameplayGifs/PlayerBow.gif"><br>
  <img src="./GameplayGifs/PlayerMagic.gif"><br>
