@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6948276350276195238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6948276350276195239}
+  - component: {fileID: 6948276350276195240}
+  m_Layer: 0
+  m_Name: TroopSpawner
+  m_TagString: TroopSpawner
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6948276350276195239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6948276350276195238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6948276350276195240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6948276350276195238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fc33bb24504964081266215eb190b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondsBetweenWaves: 45
+  swordmanEastPrefab: {fileID: 8365937376381473263, guid: 4258f0d3fa0fd6549b38d1cf8148db1f, type: 3}
+  swordmanWestPrefab: {fileID: 4797421423785083182, guid: b69252758ce452c49bdd97de9a4e05b7, type: 3}
+  archerEastPrefab: {fileID: 1724287579241153214, guid: f9c5da1e2a7dec84d842385f3a38d388, type: 3}
+  archerWestPrefab: {fileID: 7113003003956933041, guid: 0892f8f8b12a2b94ebe723372061e0e9, type: 3}
+  spawnPointPlayer: {fileID: 0}
+  roadPathPlayerA: {fileID: 0}
+  roadPathPlayerB: {fileID: 0}
+  nbOfSwordmenPlayer: 3
+  nbOfArchersPlayer: 2
+  spawnPointHotrion: {fileID: 0}
+  roadPathHotrionA: {fileID: 0}
+  roadPathHotrionB: {fileID: 0}
+  nbOfSwordmenHotrion: 3
+  nbOfArchersHotrion: 2

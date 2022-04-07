@@ -7,6 +7,7 @@ using System;
 using UnityEngine.AI;
 using Upgrades;
 using UnityEngine.EventSystems;
+using Resources;
 
 namespace Control.PlayerController
 {
@@ -42,8 +43,8 @@ namespace Control.PlayerController
 
             if(Input.GetMouseButtonDown(0))
             {
-                if(InteractWithUI()) return;
-                if(InteractWithNPC()) return;
+                if(hasHitUI()) return;
+                if(InteractWithInterractable()) return;
                 if(InteractWithMovement()) return;
             }
         }
@@ -53,7 +54,7 @@ namespace Control.PlayerController
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
-        private bool InteractWithUI()
+        private bool hasHitUI()
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
@@ -62,7 +63,7 @@ namespace Control.PlayerController
             return false;
         }
 
-        private bool InteractWithNPC()
+        private bool InteractWithInterractable()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
 
@@ -87,9 +88,17 @@ namespace Control.PlayerController
                         merchant.Interract();
                         return true;
                     }
-                    StartCoroutine(InterractWithMovement(merchant));
+                    StartCoroutine(MoveInteractWithNPC(merchant));
                     return true;
                 }
+
+                Harvestable resource = hit.collider.GetComponent<Harvestable>();
+                if(resource != null)
+                {
+                    StartCoroutine(resource.Harvest());
+                    return true;
+                }
+                
             }
             return false;
         }
@@ -112,7 +121,7 @@ namespace Control.PlayerController
             return false;
         }
 
-        private IEnumerator InterractWithMovement(Merchant target)
+        private IEnumerator MoveInteractWithNPC(Merchant target)
         {
             Vector3 destination = target.GetComponent<CapsuleCollider>().ClosestPoint(transform.position);
             mover.MoveTo(destination);

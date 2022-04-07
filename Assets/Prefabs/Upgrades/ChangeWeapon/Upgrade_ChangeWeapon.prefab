@@ -30,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,6 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4c12b6f29bd79488d5e7946960304a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  textZone: {fileID: 5804578811282941461, guid: 743c8da03512e584e8bc0233f2dcd74c, type: 3}
   newWeapon: {fileID: 11400000, guid: df35f2c7cd41d5c498c8f68fb4ccdecf, type: 2}
 --- !u!114 &4987385766720744709
 MonoBehaviour:

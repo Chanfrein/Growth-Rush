@@ -5,109 +5,112 @@ using Control.AIControl;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class TroopSpawner : MonoBehaviour
+namespace TroopSpawning
 {
-    [Header("General")]
-    [SerializeField] int secondsBetweenWaves = 20;
-    [SerializeField] GameObject swordmanEastPrefab;
-    [SerializeField] GameObject swordmanWestPrefab;
-    [SerializeField] GameObject archerEastPrefab;
-    [SerializeField] GameObject archerWestPrefab;
-
-    [Header("West")]
-    [SerializeField] Transform spawnPointWest;
-    [SerializeField] PatrolPath roadPathWestA;
-    [SerializeField] PatrolPath roadPathWestB;
-    [SerializeField] float nbOfSwordmenWest;
-    [SerializeField] float nbOfArchersWest;
-
-    [Header("East")]
-    [SerializeField] Transform spawnPointEast;
-    [SerializeField] PatrolPath roadPathEastA;
-    [SerializeField] PatrolPath roadPathEastB;
-    [SerializeField] float nbOfSwordmenEast;
-    [SerializeField] float nbOfArchersEast;
-
-    private CancellationTokenSource source;
-
-    void Start()
+    public class TroopSpawner : MonoBehaviour
     {
-        source = new CancellationTokenSource();
-        BeginSpawning(source.Token);
-    }
+        [Header("General")]
+        [SerializeField] int secondsBetweenWaves = 20;
+        [SerializeField] GameObject swordmanEastPrefab;
+        [SerializeField] GameObject swordmanWestPrefab;
+        [SerializeField] GameObject archerEastPrefab;
+        [SerializeField] GameObject archerWestPrefab;
 
-    void OnApplicationQuit()
-    {
-        source.Cancel();
-        source.Dispose();
-    }
+        [Header("Player")]
+        [SerializeField] Transform spawnPointPlayer;
+        [SerializeField] PatrolPath roadPathPlayerA;
+        [SerializeField] PatrolPath roadPathPlayerB;
+        [SerializeField] public int nbOfSwordmenPlayer;
+        [SerializeField] public int nbOfArchersPlayer;
 
-    private async void BeginSpawning(CancellationToken token)
-    {
-        while(!token.IsCancellationRequested)
+        [Header("Hotrion")]
+        [SerializeField] Transform spawnPointHotrion;
+        [SerializeField] PatrolPath roadPathHotrionA;
+        [SerializeField] PatrolPath roadPathHotrionB;
+        [SerializeField] public int nbOfSwordmenHotrion;
+        [SerializeField] public int nbOfArchersHotrion;
+
+        private CancellationTokenSource source;
+
+        void Start()
         {
-            SpawnTroopsWest();
-            SpawnTroopsEast();
-
-            await Task.Delay(secondsBetweenWaves * 1000);
-        }
-    }
-
-    private async void SpawnTroopsWest()
-    {
-        for (int i = 0; i < nbOfSwordmenWest; i++)
-        {
-            GameObject newSwordman = Instantiate(swordmanWestPrefab, spawnPointWest);
-            if(i % 2 == 0)
-            {
-                newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathWestA);
-                await Task.Delay(400);
-                continue;
-            }
-            newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathWestB);
-            await Task.Delay(400);
+            source = new CancellationTokenSource();
+            BeginSpawning(source.Token);
         }
 
-        for (int i = 0; i < nbOfArchersWest; i++)
+        void OnApplicationQuit()
         {
-            GameObject newArcher = Instantiate(archerWestPrefab, spawnPointWest);
-            if (i % 2 == 0)
-            {
-                newArcher.GetComponent<AIController>().SetPatrolPath(roadPathWestA);
-                await Task.Delay(400);
-                continue;
-            }
-            newArcher.GetComponent<AIController>().SetPatrolPath(roadPathWestB);
-            await Task.Delay(400);
-        }
-    }
-
-    private async void SpawnTroopsEast()
-    {
-        for (int i = 0; i < nbOfSwordmenEast; i++)
-        {
-            GameObject newSwordman = Instantiate(swordmanEastPrefab, spawnPointEast);
-            if (i % 2 == 0)
-            {
-                newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathEastA);
-                await Task.Delay(400);
-                continue;
-            }
-            newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathEastB);
-            await Task.Delay(400);
+            source.Cancel();
+            source.Dispose();
         }
 
-        for (int i = 0; i < nbOfArchersEast; i++)
+        private async void BeginSpawning(CancellationToken token)
         {
-            GameObject newArcher = Instantiate(archerEastPrefab, spawnPointEast);
-            if (i % 2 == 0)
+            while (!token.IsCancellationRequested)
             {
-                newArcher.GetComponent<AIController>().SetPatrolPath(roadPathEastA);
-                await Task.Delay(400);
-                continue;
+                SpawnTroopsWest();
+                SpawnTroopsEast();
+
+                await Task.Delay(secondsBetweenWaves * 1000);
             }
-            newArcher.GetComponent<AIController>().SetPatrolPath(roadPathEastB);
-            await Task.Delay(400);
+        }
+
+        private async void SpawnTroopsWest()
+        {
+            for (int i = 0; i < nbOfSwordmenPlayer; i++)
+            {
+                GameObject newSwordman = Instantiate(swordmanWestPrefab, spawnPointPlayer);
+                if (i % 2 == 0)
+                {
+                    newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathPlayerA);
+                    await Task.Delay(400);
+                    continue;
+                }
+                newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathPlayerB);
+                await Task.Delay(400);
+            }
+
+            for (int i = 0; i < nbOfArchersPlayer; i++)
+            {
+                GameObject newArcher = Instantiate(archerWestPrefab, spawnPointPlayer);
+                if (i % 2 == 0)
+                {
+                    newArcher.GetComponent<AIController>().SetPatrolPath(roadPathPlayerA);
+                    await Task.Delay(400);
+                    continue;
+                }
+                newArcher.GetComponent<AIController>().SetPatrolPath(roadPathPlayerB);
+                await Task.Delay(400);
+            }
+        }
+
+        private async void SpawnTroopsEast()
+        {
+            for (int i = 0; i < nbOfSwordmenHotrion; i++)
+            {
+                GameObject newSwordman = Instantiate(swordmanEastPrefab, spawnPointHotrion);
+                if (i % 2 == 0)
+                {
+                    newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathHotrionA);
+                    await Task.Delay(400);
+                    continue;
+                }
+                newSwordman.GetComponent<AIController>().SetPatrolPath(roadPathHotrionB);
+                await Task.Delay(400);
+            }
+
+            for (int i = 0; i < nbOfArchersHotrion; i++)
+            {
+                GameObject newArcher = Instantiate(archerEastPrefab, spawnPointHotrion);
+                if (i % 2 == 0)
+                {
+                    newArcher.GetComponent<AIController>().SetPatrolPath(roadPathHotrionA);
+                    await Task.Delay(400);
+                    continue;
+                }
+                newArcher.GetComponent<AIController>().SetPatrolPath(roadPathHotrionB);
+                await Task.Delay(400);
+            }
         }
     }
 }

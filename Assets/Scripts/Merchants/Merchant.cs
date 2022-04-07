@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Upgrades
 {
@@ -16,6 +17,7 @@ namespace Upgrades
         private void Start() 
         {
             player = GameObject.FindWithTag("Player").transform;
+            UpdateShopWindow();
         }
 
         public void Interract()

@@ -42,17 +42,17 @@ namespace Combat.Stats
             EquipWeapon(weapon);
         }
 
+        private void Update()
+        {
+            timeSinceLastAttack += Time.deltaTime;
+        }
+
         public void EquipWeapon(Weapon newWeapon)
         {
             newWeapon.SpawnWeapon(rightHandTransform, leftHandTransform, animator);
             weapon = newWeapon;
-
         }
 
-        private void Update() 
-        {
-            timeSinceLastAttack += Time.deltaTime;
-        }
 
         public bool CanAttackTarget()
         {
@@ -71,6 +71,11 @@ namespace Combat.Stats
                 mover.AdjustSpeedWithFraction(1f);
                 mover.MoveTo(combatTarget.transform.position);
             }
+        }
+
+        public Weapon GetWeapon()
+        {
+            return weapon;
         }
 
         public void Attack()
@@ -119,7 +124,7 @@ namespace Combat.Stats
             }
             currentHealth -= damage;
             Mathf.Clamp(currentHealth, 0, maxHealth);
-            if(currentHealth == 0)
+            if(currentHealth <= 0)
             {
                 Die();
             }
