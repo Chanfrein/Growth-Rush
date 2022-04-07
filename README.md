@@ -13,11 +13,11 @@ The player must help his troops push against the AI's troop, either through dire
  
 <img src="./GameplayGifs/TroopsSpawning.gif"><br>
 The script responsible for spawning the troops is Scripts/Core/TroopSpawner.cs.<br>
-In this script I decided to try my hand at asynchronous functions instead of coroutines, mostly for fun but also because coroutines are native to unity.<br>
+In this script I decided to try my hand at asynchronous functions instead of coroutines, mostly for fun but also because coroutines are limited to unity.<br>
 <br>
 <br>
 <img src="./GameplayGifs/PatrolPath.gif"><br>
-Here we see the original line of troops that spawn from a base dividing into two. Each ai combatant has a patrol path prafab assgined to it.<br>
+Here we see the original line of troops that spawned from a base dividing into two. Each ai combatant has a patrol path prefab assgined to it.<br>
 I have a simple patrol path script that draw gizmos to facilitate design as well as a contain few methods used by the ai controller.<br>
 More in Scripts/Control/PatrolPath.cs<br>
  <br>
